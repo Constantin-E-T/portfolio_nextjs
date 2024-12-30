@@ -1,36 +1,160 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js 15, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## 🛠️ Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework:** [Next.js 14](https://nextjs.org/) with App Router
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide](https://lucide.dev/)
+- **Package Manager:** [pnpm](https://pnpm.io/)
+
+## ✨ Features
+
+- Responsive design
+- Dark/Light mode
+- Modern animations and transitions
+- Type-safe
+- Error handling
+- Environment-aware configuration
+- Development testing routes
+
+## 📁 Project Structure
+
+```
+📁 portfolio/
+├── 📁 app/                      # Next.js 14 App Router
+│   ├── 📁 (auth)/              # Authentication routes (reference)
+│   ├── 📁 (test)/              # Testing routes
+│   ├── 📁 components/          # React components
+│   │   ├── 📁 auth/           # Authentication components
+│   │   ├── 📁 layout/         # Layout components
+│   │   ├── 📁 sections/       # Page sections
+│   │   └── 📁 ui/            # UI components
+│   └── [app routes]
+├── 📁 lib/                      # Utility functions and configs
+│   ├── 📁 auth/               # Auth utilities
+│   ├── 📁 config/             # App configuration
+│   ├── 📁 constants/          # Constants
+│   └── 📁 utils/              # Utility functions
+└── 📁 public/                   # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone [soon]
+cd portfolio
+```
 
-## Learn More
+2. **Install dependencies:**
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Run the development server:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+4. **Build for production:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm build
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧪 Testing
+
+The project includes a testing environment accessible in development:
+
+```bash
+# Run in test mode
+pnpm dev:test
+
+# Build for test environment
+pnpm build:test
+```
+
+Test routes are available at `/test` in development mode.
+
+## 🎨 Styling
+
+- Uses Tailwind CSS with custom configuration
+- CSS variables for theming
+- Support for dark/light modes
+- Custom animations
+- Responsive design
+
+## 🔧 Configuration
+
+### TypeScript
+
+- Strict mode enabled
+- Path aliases configured
+- Next.js types integrated
+
+### Tailwind
+
+- Custom color scheme
+- Animation plugins
+- shadcn/ui integration
+- Custom keyframes
+
+## 📦 Key Dependencies
+
+```json
+{
+  "next": "15.1.3",
+  "react": "^19.0.0",
+  "framer-motion": "^11.15.0",
+  "next-themes": "^0.4.4",
+  "tailwindcss": "^3.4.1",
+  "typescript": "^5"
+}
+```
+
+## 🏗️ Project Organization
+
+### Route Groups
+
+- `(auth)` - Authentication routes (reference implementation)
+- `(test)` - Testing and development routes
+
+### Components
+
+- `layout/` - Reusable layout components
+- `sections/` - Page-specific sections
+- `ui/` - Reusable UI components
+- `auth/` - Authentication components
+
+### Library
+
+- `config/` - Environment and app configuration
+- `constants/` - Shared constants
+- `utils/` - Utility functions
+- `auth/` - Auth-related utilities
+
+### Core Files
+
+- Error handling (`error.tsx`, `global-error.tsx`, `not-found.tsx`)
+- Layout and templating (`layout.tsx`, `template.tsx`)
+- Global styles (`globals.css`)
+
+## 📝 License
+
+[N/A]
+
+## 🤝 Contributing
+
+[N/A]
+
+---
+Built with ❤️ in Portsmouth, UK

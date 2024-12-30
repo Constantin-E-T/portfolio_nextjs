@@ -6,27 +6,67 @@ import Navigation from './navigation';
 import { Button } from "@/components/ui/button";
 import { MoonIcon, SunIcon, MenuIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { motion } from "framer-motion";
 import { useState } from 'react';
+import { navigationLinks } from "@/lib/constants/navigation";
 
 export default function Header() {
   const { setTheme, theme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
+    <motion.header 
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60"
+    >
       <div className="container mx-auto">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-8">
+          {/* Logo */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
             <Link 
               href="/" 
-              className="text-xl font-bold gradient-text"
+              className="text-xl font-bold relative group"
             >
-              CE
+              <span className="relative">
+                CE
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </span>
             </Link>
+          </motion.div>
+
+          {/* Center Navigation */}
+          <div className="absolute left-1/2 -translate-x-1/2">
             <Navigation />
           </div>
           
-          <div className="flex items-center gap-2">
+          {/* Right Section: Auth & Theme */}
+          <motion.div 
+            className="flex items-center gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {/* Auth Links */}
+            <div className="hidden md:flex items-center gap-4">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/login" className="text-sm font-medium">
+                  Sign in
+                </Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link href="/register">
+                  Get Started
+                </Link>
+              </Button>
+            </div>
+
+            {/* Theme Toggle */}
             <Button
               variant="ghost"
               size="icon"
@@ -38,6 +78,7 @@ export default function Header() {
               <span className="sr-only">Toggle theme</span>
             </Button>
 
+            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="icon"
@@ -46,30 +87,64 @@ export default function Header() {
             >
               <MenuIcon className="h-[1.2rem] w-[1.2rem]" />
             </Button>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-border">
-          <nav className="container mx-auto py-4">
-            <ul className="flex flex-col space-y-4">
-              {['Home', 'About', 'Projects', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link
-                    href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                    className="block px-2 py-1.5 text-sm font-medium hover:text-primary transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      )}
-    </header>
+      <motion.div 
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ 
+          opacity: isMenuOpen ? 1 : 0,
+          height: isMenuOpen ? "auto" : 0
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="md:hidden border-t border-border overflow-hidden"
+      >
+        <nav className="container mx-auto py-4">
+          <ul className="flex flex-col space-y-4">
+            {navigationLinks.map((item) => (
+              <motion.li 
+                key={item.name}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Link
+                  href={item.href}
+                  className="block px-2 py-1.5 text-sm font-medium hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              </motion.li>
+            ))}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+              className="pt-4 border-t border-border/40"
+            >
+              <div className="flex flex-col gap-2">
+                <Link
+                  href="/login"
+                  className="block px-2 py-1.5 text-sm font-medium hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/register"
+                  className="block px-2 py-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Get Started
+                </Link>
+              </div>
+            </motion.div>
+          </ul>
+        </nav>
+      </motion.div>
+    </motion.header>
   );
 }

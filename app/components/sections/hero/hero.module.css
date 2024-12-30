@@ -1,0 +1,116 @@
+/* components/sections/hero/hero.module.css */
+
+@keyframes matrix-rain {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+  
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+  }
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .background {
+    @apply absolute inset-0 -z-10 overflow-hidden;
+  }
+  
+  .background.dark {
+    @apply bg-gradient-to-br from-background via-background to-background/90;
+  }
+  
+  .background.light {
+    @apply bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100;
+  }
+  
+  .gradientOverlay {
+    @apply absolute inset-0;
+  }
+  
+  .gradientLayer {
+    @apply absolute inset-0 bg-gradient-to-br;
+  }
+  
+  .gradientLayer.dark {
+    @apply from-blue-500/5 via-purple-500/5 to-pink-500/5;
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+  }
+  
+  .gradientLayer.light {
+    @apply from-blue-300/20 via-indigo-300/20 to-violet-300/20;
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+  }
+  
+  .matrixChar {
+    @apply absolute font-mono text-sm font-medium tracking-wider;
+    transition: transform 0.3s ease;
+  }
+  
+  .matrixChar.dark {
+    @apply text-blue-300/60;
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  }
+  
+  .matrixChar.light {
+    @apply text-slate-700/40;
+    text-shadow: 0 0 8px rgba(51, 65, 85, 0.3);
+  }
+  
+  .matrixChar:hover {
+    transform: scale(1.1);
+  }
+  
+  .grid {
+    @apply absolute inset-0;
+  }
+  
+  .grid.dark {
+    @apply opacity-[0.03];
+  }
+  
+  .grid.light {
+    @apply opacity-[0.07];
+  }
+  
+  .ambientGlow {
+    @apply absolute inset-0;
+  }
+  
+  .ambientGlow.dark {
+    background: radial-gradient(
+      circle at 50% 50%,
+      transparent 20%,
+      hsl(var(--background)) 70%
+    );
+  }
+  
+  .ambientGlow.light {
+    background: radial-gradient(
+      circle at 50% 50%,
+      transparent 20%,
+      rgba(241, 245, 249, 0.9) 70%
+    );
+  }
+  
+  .noise {
+    @apply absolute inset-0 pointer-events-none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E");
+  }
+  
+  .noise.dark {
+    @apply opacity-[0.015];
+  }
+  
+  .noise.light {
+    @apply opacity-[0.03];
+  }

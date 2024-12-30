@@ -1,128 +1,198 @@
 'use client';
 
 import Link from 'next/link';
+import { motion, Variants } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { GitHubLogoIcon, LinkedInLogoIcon, ExternalLinkIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon, LinkedInLogoIcon, HeartIcon } from "@radix-ui/react-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const footerLinks = [
-  {
-    title: "Navigation",
-    items: [
-      { name: "Home", href: "/" },
-      { name: "About", href: "/about" },
-      { name: "Projects", href: "/projects" },
-      { name: "Contact", href: "/contact" },
-    ]
+interface SocialLink {
+  name: string;
+  href: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  description: string;
+}
+
+interface NavLink {
+  name: string;
+  href: string;
+}
+
+const socialLinks: SocialLink[] = [
+  { 
+    name: "GitHub", 
+    href: "https://github.com/yourusername",
+    Icon: GitHubLogoIcon,
+    description: "Check out my code"
   },
-  {
-    title: "Social",
-    items: [
-      { 
-        name: "GitHub", 
-        href: "https://github.com/yourusername",
-        Icon: GitHubLogoIcon,
-        external: true
-      },
-      { 
-        name: "LinkedIn", 
-        href: "https://linkedin.com/in/yourusername",
-        Icon: LinkedInLogoIcon,
-        external: true
-      }
-    ]
+  { 
+    name: "LinkedIn", 
+    href: "https://linkedin.com/in/yourusername",
+    Icon: LinkedInLogoIcon,
+    description: "Let's connect"
   }
 ];
 
-export default function Footer() {
-  return (
-    <footer className="border-t border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto">
-        <div className="py-8">
-          {/* Main footer content */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
-            {/* Branding */}
-            <div className="md:col-span-4">
-              <div className="space-y-2">
-                <Link href="/" className="text-xl font-bold gradient-text inline-block">
-                  Constantin Emilian
-                </Link>
-                <p className="text-sm text-muted-foreground">
-                  Senior Full Stack Developer specializing in building exceptional digital experiences.
-                </p>
-              </div>
-            </div>
+const navigationLinks: NavLink[] = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Projects", href: "/projects" },
+  { name: "Contact", href: "/contact" }
+];
 
-            {/* Links */}
-            <div className="md:col-span-8">
-              <div className="grid grid-cols-2 gap-8">
-                {footerLinks.map((section) => (
-                  <div key={section.title} className="space-y-3">
-                    <h4 className="text-sm font-semibold">{section.title}</h4>
-                    <ul className="space-y-2">
-                      {section.items.map((item) => (
-                        <li key={item.name}>
-                          {'external' in item ? (
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
+
+export default function Footer() {
+  const startYear = 2018;
+  const currentYear = new Date().getFullYear();
+  const yearsOfExperience = currentYear - startYear;
+
+  return (
+    <motion.footer 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="border-t border-border/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    >
+      <div className="container mx-auto">
+        <div className="py-12">
+          {/* Main footer content */}
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 gap-12 md:grid-cols-12"
+          >
+            {/* Branding & Bio */}
+            <motion.div variants={itemVariants} className="md:col-span-6 space-y-4">
+              <Link 
+                href="/" 
+                className="text-xl font-bold inline-block hover:text-primary transition-colors relative group"
+              >
+                Constantin Emilian
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
+                Crafting exceptional digital experiences since 2018. Specializing in full-stack development 
+                with a passion for clean code and intuitive design.
+              </p>
+              <motion.div 
+                className="flex items-center gap-4 pt-4"
+                variants={containerVariants}
+              >
+                <TooltipProvider>
+                  {socialLinks.map((item) => (
+                    <motion.div
+                      key={item.name}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="ghost" size="icon" className="relative" asChild>
                             <a
                               href={item.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group"
+                              className="hover:text-primary transition-colors"
                             >
-                              {'Icon' in item && <item.Icon className="h-4 w-4" />}
-                              {item.name}
-                              <ExternalLinkIcon className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <item.Icon className="h-5 w-5" />
+                              <span className="sr-only">{item.name}</span>
                             </a>
-                          ) : (
-                            <Link
-                              href={item.href}
-                              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                            >
-                              {item.name}
-                            </Link>
-                          )}
-                        </li>
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" className="bg-primary text-primary-foreground">
+                          <p className="text-xs">{item.description}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </motion.div>
+                  ))}
+                </TooltipProvider>
+              </motion.div>
+            </motion.div>
+
+            {/* Quick Links */}
+            <motion.div variants={itemVariants} className="md:col-span-6">
+              <div className="grid gap-8 md:place-content-end md:text-right">
+                <div className="space-y-4">
+                  <h4 className="text-sm font-semibold tracking-wide uppercase text-primary">
+                    Navigation
+                  </h4>
+                  <nav>
+                    <motion.ul 
+                      className="space-y-2"
+                      variants={containerVariants}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true }}
+                    >
+                      {navigationLinks.map((item) => (
+                        <motion.li 
+                          key={item.name}
+                          variants={itemVariants}
+                          whileHover={{ x: -5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <Link
+                            href={item.href}
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block"
+                          >
+                            {item.name}
+                          </Link>
+                        </motion.li>
                       ))}
-                    </ul>
-                  </div>
-                ))}
+                    </motion.ul>
+                  </nav>
+                </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Bottom bar */}
-          <div className="mt-8 pt-6 border-t border-border/40">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-sm text-muted-foreground order-2 md:order-1">
-                © {new Date().getFullYear()} Constantin Tivlica. All rights reserved.
-              </p>
-              <div className="flex items-center gap-4 order-1 md:order-2">
-                <Button variant="ghost" size="icon" asChild>
-                  <a
-                    href="https://github.com/yourusername"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
-                    <GitHubLogoIcon className="h-5 w-5" />
-                    <span className="sr-only">GitHub</span>
-                  </a>
-                </Button>
-                <Button variant="ghost" size="icon" asChild>
-                  <a
-                    href="https://linkedin.com/in/yourusername"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
-                    <LinkedInLogoIcon className="h-5 w-5" />
-                    <span className="sr-only">LinkedIn</span>
-                  </a>
-                </Button>
+          <motion.div 
+            variants={itemVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="mt-12 pt-6 border-t border-border/20"
+          >
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+              <div className="order-2 md:order-1 text-center md:text-left space-y-2">
+                <p>© {startYear}–{currentYear} Constantin Emilian. All rights reserved.</p>
+                <p className="text-xs">{yearsOfExperience}+ years of turning ideas into reality through code.</p>
               </div>
+              <motion.div 
+                className="order-1 md:order-2 text-center text-xs flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                <span>Made with</span>
+                <HeartIcon className="h-3 w-3 text-red-500 animate-pulse" />
+                <span>in Portsmouth, UK</span>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
