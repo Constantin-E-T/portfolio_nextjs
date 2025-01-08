@@ -2,11 +2,15 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Code, Terminal } from 'lucide-react';
+import { FileText, Mail } from 'lucide-react';
 import Link from 'next/link';
-import type { HeroContentProps } from "@/lib/types/hero";
 
-export function HeroContent({ title, description, technologies }: HeroContentProps) {
+export function AboutContent() {
+  const handleDownloadCV = () => {
+    // The path is relative to the public directory
+    window.open('/cv/EmilianCV.pdf', '_blank');
+  };
+
   return (
     <div className="space-y-8">
       <motion.h1 
@@ -15,7 +19,7 @@ export function HeroContent({ title, description, technologies }: HeroContentPro
         transition={{ duration: 0.5 }}
         className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
       >
-        {title}
+        About Me
       </motion.h1>
 
       <motion.p 
@@ -24,7 +28,9 @@ export function HeroContent({ title, description, technologies }: HeroContentPro
         transition={{ duration: 0.5, delay: 0.1 }}
         className="max-w-[600px] text-lg text-muted-foreground sm:text-xl"
       >
-        {description}
+        Full-stack developer with {new Date().getFullYear() - 2018}+ years of experience, 
+        specializing in Python, Django, and React development. Currently building 
+        scalable solutions at WOOOBA Sport Inc.
       </motion.p>
       
       <motion.div 
@@ -36,12 +42,10 @@ export function HeroContent({ title, description, technologies }: HeroContentPro
         <Button 
           size="lg"
           className="group bg-foreground text-background hover:bg-foreground/90"
-          asChild
+          onClick={handleDownloadCV}
         >
-          <Link href="/projects">
-            View Projects
-            <Code className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
-          </Link>
+          Download CV
+          <FileText className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
         </Button>
         <Button 
           size="lg"
@@ -50,8 +54,8 @@ export function HeroContent({ title, description, technologies }: HeroContentPro
           asChild
         >
           <Link href="/contact">
-            Contact Me
-            <Terminal className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
+            Get in Touch
+            <Mail className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
           </Link>
         </Button>
       </motion.div>
@@ -63,15 +67,15 @@ export function HeroContent({ title, description, technologies }: HeroContentPro
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex flex-wrap gap-3"
         >
-          {technologies.map((tech) => (
+          {['Python', 'Django', 'React', 'Next.js', 'Machine Learning', 'Server Management'].map((tech, index) => (
             <motion.span
-              key={tech.name}
+              key={tech}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: tech.delay + 0.3 }}
+              transition={{ duration: 0.3, delay: index * 0.1 + 0.3 }}
               className="inline-flex items-center rounded-full border border-foreground/10 bg-background/50 px-4 py-1.5 text-sm backdrop-blur-sm hover:border-foreground/20 hover:bg-background/80"
             >
-              {tech.name}
+              {tech}
             </motion.span>
           ))}
         </motion.div>

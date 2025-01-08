@@ -1,0 +1,73 @@
+/* components/sections/about/about.module.css */
+.container {
+    @apply relative bg-black text-white min-h-screen overflow-hidden;
+  }
+  
+  .background {
+    @apply fixed inset-0 pointer-events-none;
+  }
+  
+  .element {
+    @apply absolute w-1 h-1 bg-emerald-500/20 rounded-full;
+    animation: float 10s infinite;
+    animation-delay: var(--delay);
+    left: var(--position);
+    opacity: 0;
+  }
+  
+  .content {
+    @apply relative z-10;
+  }
+  
+  .info {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .terminalWrapper {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .terminal {
+    @apply bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800 overflow-hidden;
+  }
+  
+  .terminalHeader {
+    @apply flex items-center justify-between px-4 py-3 bg-gray-900/80 border-b border-gray-800;
+  }
+  
+  .terminalContent {
+    @apply p-6 font-mono text-gray-300;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(100vh) scale(0);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100vh) scale(1);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

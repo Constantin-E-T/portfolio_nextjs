@@ -1,4 +1,5 @@
-'use client'
+'use client';
+
 import { useEffect, useState, useRef, useCallback } from 'react';
 
 interface MatrixSymbol {
@@ -53,7 +54,6 @@ export function BackgroundElements() {
 
     const isDark = document.documentElement.classList.contains('dark');
     
-    // Background fade effect
     if (isDark) {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.95)';
     } else {
@@ -69,7 +69,6 @@ export function BackgroundElements() {
         ? MATRIX_CHARACTERS[Math.floor(Math.random() * MATRIX_CHARACTERS.length)]
         : symbol.value;
 
-      // Use theme-appropriate colors
       const baseColor = isDark ? '0, 255, 170' : '150, 150, 255';
       
       ctx.shadowBlur = 2;
@@ -79,7 +78,6 @@ export function BackgroundElements() {
       ctx.font = `${symbol.fontSize}px "Fira Code", monospace`;
       ctx.fillText(symbol.value, symbol.x, symbol.y);
       
-      // Reset shadow for next iteration
       ctx.shadowBlur = 0;
 
       return {

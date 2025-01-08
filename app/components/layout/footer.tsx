@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
 import { Button } from "@/components/ui/button";
+import { FileDown, Mail } from "lucide-react";
 import { GitHubLogoIcon, LinkedInLogoIcon, HeartIcon } from "@radix-ui/react-icons";
 import {
   Tooltip,
@@ -26,15 +27,21 @@ interface NavLink {
 const socialLinks: SocialLink[] = [
   { 
     name: "GitHub", 
-    href: "https://github.com/yourusername",
+    href: "https://github.com/Constantin-E-T",
     Icon: GitHubLogoIcon,
     description: "Check out my code"
   },
   { 
     name: "LinkedIn", 
-    href: "https://linkedin.com/in/yourusername",
+    href: "https://uk.linkedin.com/in/constantin-emilian-tivlica-00a354206",
     Icon: LinkedInLogoIcon,
     description: "Let's connect"
+  },
+  {
+    name: "Email",
+    href: "mailto:constantin@woooba.io",
+    Icon: Mail,
+    description: "Send me an email"
   }
 ];
 
@@ -64,6 +71,10 @@ export default function Footer() {
   const startYear = 2018;
   const currentYear = new Date().getFullYear();
   const yearsOfExperience = currentYear - startYear;
+
+  const handleDownloadCV = () => {
+    window.open('/cv/EmilianCV.pdf', '_blank');
+  };
 
   return (
     <motion.footer 
@@ -126,6 +137,27 @@ export default function Footer() {
                       </Tooltip>
                     </motion.div>
                   ))}
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={handleDownloadCV}
+                          className="hover:text-primary transition-colors"
+                        >
+                          <FileDown className="h-5 w-5" />
+                          <span className="sr-only">Download CV</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent side="top" className="bg-primary text-primary-foreground">
+                        <p className="text-xs">Download my CV</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </motion.div>
                 </TooltipProvider>
               </motion.div>
             </motion.div>

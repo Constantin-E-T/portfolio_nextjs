@@ -1,0 +1,38 @@
+/* components/sections/contact/contact.module.css */
+.background {
+  @apply absolute inset-0 -z-10 overflow-hidden;
+}
+
+.background.dark {
+  @apply bg-gradient-to-br from-background via-background to-background/90;
+}
+
+.background.light {
+  @apply bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100;
+}
+
+.gradientOverlay {
+  @apply absolute inset-0;
+}
+
+.gradientLayer {
+  @apply absolute inset-0 bg-gradient-to-br;
+}
+
+.gradientLayer.dark {
+  @apply from-blue-500/5 via-purple-500/5 to-pink-500/5;
+  animation: gradient 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+.gradientLayer.light {
+  @apply from-blue-300/20 via-indigo-300/20 to-violet-300/20;
+  animation: gradient 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
