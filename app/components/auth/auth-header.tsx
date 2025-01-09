@@ -1,0 +1,1 @@
+// app/components/auth/auth-header.tsx
