@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import Head from 'next/head'; 
 import Navigation from './navigation';
 import { Button } from "@/components/ui/button";
 import { MoonIcon, SunIcon, MenuIcon } from "lucide-react";
@@ -15,6 +16,12 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
+    <>
+    <Head>
+        <title>Constantin Emilian - Senior Full Stack Developer | Python, Django, React Expert</title>
+        <meta name="description" content="Senior Full Stack Developer specializing in Python, Django, and React development. Creating responsive, user-centric web applications with modern tech stack." />
+        <meta name="keywords" content="Constantin Emilian, Full Stack Developer, Python, Django, React, Web Development, Portsmouth" />
+      </Head>
     <motion.header 
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
@@ -146,5 +153,6 @@ export default function Header() {
         </nav>
       </motion.div>
     </motion.header>
+    </>
   );
 }
