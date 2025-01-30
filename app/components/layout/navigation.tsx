@@ -53,14 +53,14 @@ export default function Navigation() {
             >
               <span className={`${
                 pathname === item.href 
-                  ? "text-primary" 
-                  : "text-muted-foreground group-hover:text-primary"
+                  ? "text-[#9167f0] hover:text-[#9167f0]/80" 
+                  : "text-muted-foreground hover:text-[#9167f0]"
               } transition-colors duration-200`}>
                 {item.name}
               </span>
               <span 
-                className={`absolute -bottom-[1.5rem] left-0 h-[2px] bg-primary transition-all duration-300
-                  ${pathname === item.href ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                className={`absolute -bottom-[1.5rem] left-0 h-[2px] bg-[#9167f0] transition-all duration-300
+                  ${pathname === item.href ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-100'}`}
               />
             </Link>
           </motion.li>
