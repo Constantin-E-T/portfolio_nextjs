@@ -4,10 +4,6 @@ import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./db"
 
-const allowedUrls = process.env.NEXTAUTH_URLS ? 
-  JSON.parse(process.env.NEXTAUTH_URLS) : 
-  [];
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -15,12 +11,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientId: process.env.AUTH_GITHUB_ID!,
       clientSecret: process.env.AUTH_GITHUB_SECRET!,
       authorization: {
-        url: "https://github.com/login/oauth/authorize",
-        params: ({ callback }: { callback: string }) => ({
-          // Dynamically set the redirect_uri based on the request origin
-          redirect_uri: callback,
-          scope: "read:user user:email",
-        })
+        params: {
+          redirect_uri: 'https://conn.digital/api/auth/callback/github'
+        }
       }
     }),
     Google({
@@ -29,20 +22,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     })
   ],
   trustHost: true,
-  callbacks: {
-    async redirect({ url }) {
-      // Get the origin of the request
-      const origin = new URL(url).origin;
-      
-      if (url.startsWith('/')) {
-        return `${origin}${url}`;
-      } 
-      
-      if (allowedUrls.some((domain: string) => url.startsWith(domain))) {
-        return url;
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        domain: '.conn.digital'
       }
-      
-      return origin;
     }
   }
 })
