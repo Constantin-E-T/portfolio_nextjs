@@ -1,3 +1,5 @@
+// app/components/layout/Navbar.tsx
+
 import Link from "next/link";
 import Logo from "@/public/logo/logo.svg";
 import Image from "next/image";

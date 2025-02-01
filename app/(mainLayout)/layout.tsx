@@ -1,6 +1,8 @@
+// app/(mainLayout)/layout.tsx
+
 import { ReactNode } from 'react';
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
+import { Navbar } from '@/app/components/layout/Navbar';
+import { Footer } from '@/app/components/layout/Footer';  // Update this path
 
 interface MainLayoutProps {
     children: ReactNode;
