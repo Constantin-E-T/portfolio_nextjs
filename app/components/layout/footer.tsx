@@ -67,7 +67,7 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0 }
 };
 
-export default function Footer() {
+export function Footer() {
   const startYear = 2018;
   const currentYear = new Date().getFullYear();
   const yearsOfExperience = currentYear - startYear;
@@ -228,3 +228,4 @@ export default function Footer() {
     </motion.footer>
   );
 }
+
