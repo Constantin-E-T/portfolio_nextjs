@@ -4,6 +4,9 @@ import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./db"
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+const baseUrl = isDevelopment ? 'http://localhost:3000' : 'https://conn.digital'
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -12,7 +15,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.AUTH_GITHUB_SECRET!,
       authorization: {
         params: {
-          redirect_uri: 'https://conn.digital/api/auth/callback/github'
+          redirect_uri: `${baseUrl}/api/auth/callback/github`
         }
       }
     }),
@@ -21,7 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
       authorization: {
         params: {
-          redirect_uri: 'https://conn.digital/api/auth/callback/google'
+          redirect_uri: `${baseUrl}/api/auth/callback/google`
         }
       }
     })
@@ -34,8 +37,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
-        domain: '.conn.digital'
+        secure: !isDevelopment,
+        domain: isDevelopment ? 'localhost' : '.conn.digital'
       }
     }
   }
