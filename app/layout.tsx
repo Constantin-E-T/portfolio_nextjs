@@ -1,10 +1,8 @@
-// app/layout.tsx
-
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/app/components/general/theme-provider";
 import "./globals.css";
 import { Navbar } from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
+import Footer from "./components/layout/Footer_test"; // Updated import path
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,16 +21,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-      <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
