@@ -1,11 +1,10 @@
-// app/components/layout/Navbar.tsx
-
 import Link from "next/link";
 import Logo from "@/public/logo/logo.svg";
 import Image from "next/image";
 import { Button, buttonVariants } from "../ui/button";
 import { ThemeToggle } from "../general/ThemeToggle";
 import { auth, signOut } from "@/app/utils/auth";
+import { NavLinks } from "./NavLinks";
 
 export async function Navbar() {
     const session = await auth();
@@ -24,6 +23,9 @@ export async function Navbar() {
                             <span className="absolute bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                         </span>
                     </Link>
+
+                    {/* Center Navigation */}
+                    <NavLinks />
 
                     {/* Right Side */}
                     <div className="flex items-center gap-4">
