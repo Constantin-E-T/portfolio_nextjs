@@ -1,7 +1,7 @@
 // components/sections/about/index.tsx
 'use client';
 
-import { CODE_SNIPPETS } from "@/lib/constants/about";
+import { CODE_SNIPPETS } from "@/constants/about";
 import { AboutContent } from "./about-content";
 import { AnimatedTerminal } from "./animated-terminal";
 import { BackgroundElements } from "./background-elements";

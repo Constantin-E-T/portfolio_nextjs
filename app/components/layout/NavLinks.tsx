@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { navigationLinks } from "@/lib/constants/navigation";
+import { navigationLinks } from "@/constants/navigation";
 
 export function NavLinks() {
   const pathname = usePathname();
@@ -15,13 +15,13 @@ export function NavLinks() {
             <Link
               href={item.href}
               className={`relative text-sm font-medium transition-colors group inline-block
-                ${pathname === item.href 
-                  ? "text-primary" 
+                ${pathname === item.href
+                  ? "text-primary"
                   : "text-muted-foreground hover:text-primary"
                 }`}
             >
               {item.name}
-              <span 
+              <span
                 className={`absolute -bottom-6 left-0 h-[2px] bg-primary transition-all duration-300
                   ${pathname === item.href ? 'w-full' : 'w-0 group-hover:w-full'}`}
               />

@@ -41,7 +41,7 @@
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
+    --primary: 267 80% 65%;  /* Adjusted just this value for better visibility */
     --primary-foreground: 210 20% 98%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
@@ -53,13 +53,13 @@
     --destructive-foreground: 210 20% 98%;
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
+    --ring: 267 80% 65%;     /* Updated ring to match primary */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-  }
+}
 }
 
 

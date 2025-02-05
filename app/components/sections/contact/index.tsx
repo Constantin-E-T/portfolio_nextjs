@@ -1,7 +1,7 @@
 // components/sections/contact/index.tsx
 'use client';
 
-import { CODE_SNIPPETS } from "@/lib/constants/contact";
+import { CODE_SNIPPETS } from "@/constants/contact";
 import { ContactContent } from "./contact-content";
 import { AnimatedTerminal } from "./animated-terminal";
 import { BackgroundElements } from "@/components/sections/hero/background-elements";

@@ -9,7 +9,7 @@ import { AllProjects } from "./all-projects";
 import { Boxes, Layout } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { CODE_SNIPPETS } from "@/lib/constants/projects";
+import { CODE_SNIPPETS } from "@/constants/projects";
 import './projects.module.css';
 
 type TabType = 'featured' | 'all';
@@ -26,7 +26,7 @@ export default function Projects() {
           <div>
             {/* Header Section */}
             <div className="space-y-8 mb-12">
-              <motion.h1 
+              <motion.h1
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -35,7 +35,7 @@ export default function Projects() {
                 Projects
               </motion.h1>
 
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -46,13 +46,13 @@ export default function Projects() {
             </div>
 
             {/* Tab Buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex gap-4 mb-8"
             >
-              <Button 
+              <Button
                 size="lg"
                 variant={activeTab === 'featured' ? 'default' : 'outline'}
                 className={`group ${activeTab === 'featured' ? 'bg-foreground text-background' : 'border-2'}`}
@@ -61,7 +61,7 @@ export default function Projects() {
                 <Boxes className="mr-2 h-5 w-5" />
                 Featured Projects
               </Button>
-              <Button 
+              <Button
                 size="lg"
                 variant={activeTab === 'all' ? 'default' : 'outline'}
                 className={`group ${activeTab === 'all' ? 'bg-foreground text-background' : 'border-2'}`}

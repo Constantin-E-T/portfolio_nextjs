@@ -1,7 +1,7 @@
 // components/sections/hero/index.tsx
 'use client';
 
-import { TECHNOLOGIES, CODE_SNIPPETS } from "@/lib/constants/hero";
+import { TECHNOLOGIES, CODE_SNIPPETS } from "@/constants/hero";
 import { HeroContent } from "./hero-content";
 import { AnimatedTerminal } from "./animated-terminal";
 import { BackgroundElements } from "./background-elements";
