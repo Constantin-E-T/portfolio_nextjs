@@ -29,7 +29,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     })
   ],
-  trustHost: true,
+  session: {
+    strategy: "jwt"
+  },
   cookies: {
     sessionToken: {
       name: `next-auth.session-token`,
@@ -40,6 +42,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         secure: !isDevelopment,
         domain: isDevelopment ? 'localhost' : '.conn.digital'
       }
+    },
+    pkceCodeVerifier: {
+      name: 'next-auth.pkce.code_verifier',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: !isDevelopment,
+        domain: isDevelopment ? 'localhost' : '.conn.digital'
+      }
+    }
+  },
+  trustHost: true,
+  debug: isDevelopment,
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
     }
   }
 })
