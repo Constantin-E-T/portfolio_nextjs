@@ -1,4 +1,6 @@
 // app/(main)/layout.tsx
+
+import { Suspense } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import Footer from "@/components/layout/FooterMain";
 import { PageTransition } from "@/app/components/general/PageTransition";
@@ -12,7 +14,9 @@ export default function MainLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <LoginConfetti />
+      <Suspense fallback={null}>
+        <LoginConfetti />
+      </Suspense>
       <Navbar />
       <main className="flex-1">
         <PageTransition>{children}</PageTransition>

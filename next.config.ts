@@ -10,17 +10,12 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    // This prevents static generation issues
-    workerThreads: false,
-    cpus: 1
-  },
   images: {
     domains: [
       'constantin.serverplus.org',
       'conn.digital',
       'www.conn.digital',
-      'avatars.githubusercontent.com',     // Added for GitHub avatars
+      'avatars.githubusercontent.com',    
       'avatar.vercel.sh'                  
     ],
   },
