@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // This prevents static generation issues
+    workerThreads: false,
+    cpus: 1
+  },
   images: {
     domains: [
       'constantin.serverplus.org',
