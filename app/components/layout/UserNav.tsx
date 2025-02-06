@@ -16,12 +16,12 @@ import { handleSignOut } from "@/app/actions/auth"
 import { useRouter } from 'next/navigation'
 
 interface UserNavProps {
-  user: User
+  user: User;
+  isAdmin: boolean;
 }
 
-export function UserNav({ user }: UserNavProps) {
+export function UserNav({ user, isAdmin }: UserNavProps) {
   const router = useRouter()
-  const isAdmin = user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL
 
   const handleAdminClick = () => {
     router.push('/admin')

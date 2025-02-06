@@ -7,10 +7,11 @@ import { ThemeToggle } from "../general/ThemeToggle";
 import { auth } from "@/app/utils/auth";
 import { NavLinks } from "./NavLinks";
 import { MobileNav } from "./MobileNav";
-import { UserNav } from "./UserNav"; // We'll create this next
+import { UserNav } from "./UserNav";
 
 export async function Navbar() {
     const session = await auth();
+    const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
     
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
@@ -35,7 +36,7 @@ export async function Navbar() {
                     {/* Right Side - Auth & Theme */}
                     <div className="flex items-center gap-4">
                         {session?.user ? (
-                            <UserNav user={session.user} />
+                            <UserNav user={session.user} isAdmin={isAdmin} />
                         ) : ( 
                             <Link href="/login" className="hidden md:block">
                                 <Button variant="outline">Login</Button>
