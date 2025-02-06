@@ -56,6 +56,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   trustHost: true,
   debug: isDevelopment,
+  ...(isDevelopment ? {} : { trustHost: true }),
   callbacks: {
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
