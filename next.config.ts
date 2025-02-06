@@ -11,7 +11,13 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['constantin.serverplus.org', 'conn.digital', 'www.conn.digital'],
+    domains: [
+      'constantin.serverplus.org',
+      'conn.digital',
+      'www.conn.digital',
+      'avatars.githubusercontent.com',     // Added for GitHub avatars
+      'avatar.vercel.sh'                  
+    ],
   },
   async headers() {
     return [

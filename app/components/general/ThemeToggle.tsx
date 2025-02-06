@@ -24,14 +24,27 @@ export function ThemeToggle() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+      <DropdownMenuContent 
+        align="end"
+        className="w-32 mt-2 bg-background/10 backdrop-blur-md border-border/40 shadow-lg"
+        sideOffset={8}
+      >
+        <DropdownMenuItem 
+          onClick={() => setTheme("light")}
+          className="hover:bg-primary/10"
+        >
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem 
+          onClick={() => setTheme("dark")}
+          className="hover:bg-primary/10"
+        >
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem 
+          onClick={() => setTheme("system")}
+          className="hover:bg-primary/10"
+        >
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

@@ -1,4 +1,4 @@
-// app/blog/page.tsx
+// app/(main)/blog/page.tsx
 import { BookOpen } from 'lucide-react';
 import ComingSoon from '@/components/ui/coming-soon';
 

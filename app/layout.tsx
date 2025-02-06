@@ -1,6 +1,7 @@
 // app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/app/components/general/theme-provider";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,33 +20,33 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: '/logo/favicon/favicon-32x32.png',  // Updated path
+        url: '/logo/favicon/favicon-32x32.png',  
         sizes: '32x32',
         type: 'image/png',
       },
       {
-        url: '/logo/favicon/favicon-16x16.png',  // Updated path
+        url: '/logo/favicon/favicon-16x16.png',  
         sizes: '16x16',
         type: 'image/png',
       }
     ],
     apple: {
-      url: '/logo/favicon/apple-touch-icon.png',  // Updated path
+      url: '/logo/favicon/apple-touch-icon.png',  
       sizes: '180x180',
       type: 'image/png',
     },
     other: [
       {
         rel: 'android-chrome-192x192',
-        url: '/logo/favicon/android-chrome-192x192.png',  // Updated path
+        url: '/logo/favicon/android-chrome-192x192.png',  
       },
       {
         rel: 'android-chrome-512x512',
-        url: '/logo/favicon/android-chrome-512x512.png',  // Updated path
+        url: '/logo/favicon/android-chrome-512x512.png',  
       }
     ],
   },
-  manifest: '/logo/favicon/site.webmanifest'  // Added manifest path
+  manifest: '/logo/favicon/site.webmanifest'  
 }
 
 export default function RootLayout({

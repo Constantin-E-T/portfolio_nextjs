@@ -6,6 +6,7 @@ export const navigationLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
   { name: 'Projects', href: '/projects' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
   // Only show test route in development
   ...(env.isDevelopment ? [{ name: 'Test', href: '/test' }] : []),

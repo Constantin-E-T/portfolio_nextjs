@@ -1,10 +1,13 @@
+// app/components/layout/Navbar.tsx
 import Link from "next/link";
-import Logo from "@/public/logo/logo.svg";
 import Image from "next/image";
-import { Button, buttonVariants } from "../ui/button";
+import Logo from "@/public/logo/logo.svg";
+import { Button } from "../ui/button";
 import { ThemeToggle } from "../general/ThemeToggle";
-import { auth, signOut } from "@/app/utils/auth";
+import { auth } from "@/app/utils/auth";
 import { NavLinks } from "./NavLinks";
+import { MobileNav } from "./MobileNav";
+import { UserNav } from "./UserNav"; // We'll create this next
 
 export async function Navbar() {
     const session = await auth();
@@ -14,30 +17,28 @@ export async function Navbar() {
             <div className="container mx-auto">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
-                    <Link 
-                        href="/" 
-                        className="text-xl font-bold relative group"
-                    >
-                        <span className="relative">
-                            <Image src={Logo} alt="Logo" className="size-20" />
-                        </span>
-                    </Link>
+                    <div className="flex items-center gap-4">
+                        <Link 
+                            href="/" 
+                            className="text-xl font-bold relative group"
+                        >
+                            <span className="relative">
+                                <Image src={Logo} alt="Logo" className="size-20" />
+                            </span>
+                        </Link>
+                        <MobileNav />
+                    </div>
 
-                    {/* Center Navigation */}
+                    {/* Desktop Navigation */}
                     <NavLinks />
 
-                    {/* Right Side */}
+                    {/* Right Side - Auth & Theme */}
                     <div className="flex items-center gap-4">
                         {session?.user ? (
-                            <form action={async () => {
-                                "use server";
-                                await signOut({ redirectTo: "/"});
-                              }}>
-                              <Button className={buttonVariants({ variant: "secondary" })}>Logout</Button>
-                            </form>
+                            <UserNav user={session.user} />
                         ) : ( 
-                            <Link href="/login" className={buttonVariants({ variant: "outline" })}>
-                                Login
+                            <Link href="/login" className="hidden md:block">
+                                <Button variant="outline">Login</Button>
                             </Link>
                         )}
                         <ThemeToggle />
