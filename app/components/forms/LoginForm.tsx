@@ -34,7 +34,7 @@ export async function LoginForm() {
                             action={async () => {
                                 "use server"
                                 await signIn("github", {
-                                    redirectTo: "/"
+                                    redirectTo: "/?login=success"
                                 }
                                 )
                             }}
@@ -50,7 +50,7 @@ export async function LoginForm() {
                             action={async () => {
                                 "use server"
                                 await signIn("google", {
-                                    redirectTo: "/"
+                                    redirectTo: "/?login=success"
                                 })
                               }}
                         >

@@ -9,7 +9,11 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
 
-export function MobileNav() {
+interface MobileNavProps {
+  isAdmin: boolean;
+}
+
+export function MobileNav({}: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -65,18 +69,6 @@ export function MobileNav() {
                     <span>{item.name}</span>
                   </Link>
                 ))}
-                <div className="pt-4">
-                  <Link 
-                    href="/login" 
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                      "text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                    )}
-                  >
-                    <span>Login</span>
-                  </Link>
-                </div>
               </div>
             </nav>
           </motion.div>

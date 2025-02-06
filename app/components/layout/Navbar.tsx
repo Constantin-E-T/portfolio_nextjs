@@ -27,7 +27,8 @@ export async function Navbar() {
                                 <Image src={Logo} alt="Logo" className="size-20" />
                             </span>
                         </Link>
-                        <MobileNav />
+                        <MobileNav isAdmin={isAdmin} />
+
                     </div>
 
                     {/* Desktop Navigation */}
