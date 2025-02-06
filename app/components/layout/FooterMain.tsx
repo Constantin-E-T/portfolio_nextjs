@@ -114,7 +114,7 @@ export default function Footer() {
               </h4>
               <nav>
                 <ul className="space-y-2 text-right">
-                  {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+                  {['Home', 'About', 'Projects', 'Contact', 'Blog'].map((item) => (
                     <li key={item}>
                       <Link
                         href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}

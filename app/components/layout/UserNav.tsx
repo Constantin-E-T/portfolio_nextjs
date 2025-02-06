@@ -44,7 +44,7 @@ export function UserNav({ user, isAdmin }: UserNavProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        className="w-56 mt-2 bg-background/10 backdrop-blur-md border-border/40 shadow-lg" 
+        className="w-56 mt-2 bg-background/100 border-border/40 shadow-lg" 
         align="end"
         sideOffset={8}
       >
