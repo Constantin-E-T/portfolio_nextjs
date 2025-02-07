@@ -1,6 +1,6 @@
 // app/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/app/components/general/theme-provider"; 
+import { ThemeProvider } from "@/app/components/general/theme-provider";
 import { CountlyAnalytics } from "@/app/components/analytics/CountlyAnalytics";
 
 import "./globals.css";
@@ -21,33 +21,33 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: '/logo/favicon/favicon-32x32.png',
+        url: '/logo/favicon/favicon-32x32.png',  
         sizes: '32x32',
         type: 'image/png',
       },
       {
-        url: '/logo/favicon/favicon-16x16.png',
+        url: '/logo/favicon/favicon-16x16.png',  
         sizes: '16x16',
         type: 'image/png',
       }
     ],
     apple: {
-      url: '/logo/favicon/apple-touch-icon.png',
+      url: '/logo/favicon/apple-touch-icon.png',  
       sizes: '180x180',
       type: 'image/png',
     },
     other: [
       {
         rel: 'android-chrome-192x192',
-        url: '/logo/favicon/android-chrome-192x192.png',
+        url: '/logo/favicon/android-chrome-192x192.png',  
       },
       {
         rel: 'android-chrome-512x512',
-        url: '/logo/favicon/android-chrome-512x512.png',
+        url: '/logo/favicon/android-chrome-512x512.png',  
       }
     ],
   },
-  manifest: '/logo/favicon/site.webmanifest'
+  manifest: '/logo/favicon/site.webmanifest'  
 }
 
 export default function RootLayout({
@@ -59,9 +59,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/logo/favicon/site.webmanifest" />
-        {/* Countly Analytics Script */}
         <CountlyAnalytics />
-
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
