@@ -8,12 +8,13 @@ import { navigationLinks } from "@/constants/navigation"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "framer-motion"
+import { User } from 'next-auth'
 
 interface MobileNavProps {
-  isAdmin: boolean;
+  user?: User | null
 }
 
-export function MobileNav({}: MobileNavProps) {
+export function MobileNav({ user }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -69,6 +70,20 @@ export function MobileNav({}: MobileNavProps) {
                     <span>{item.name}</span>
                   </Link>
                 ))}
+                {!user && (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "flex items-center space-x-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                      pathname === "/login"
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                    )}
+                  >
+                    <span>Login</span>
+                  </Link>
+                )}
               </div>
             </nav>
           </motion.div>

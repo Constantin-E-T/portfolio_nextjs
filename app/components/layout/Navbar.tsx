@@ -17,7 +17,7 @@ export async function Navbar() {
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto">
                 <div className="flex h-16 items-center justify-between">
-                    {/* Logo */}
+                    {/* Logo and Mobile Nav */}
                     <div className="flex items-center gap-4">
                         <Link
                             href="/"
@@ -28,14 +28,13 @@ export async function Navbar() {
                                     src={Logo}
                                     alt="Logo"
                                     className="size-20"
-                                    priority={true}  // Add priority for above-the-fold logo
-                                    width={80}       // Specify exact dimensions
+                                    priority={true}
+                                    width={80}
                                     height={80}
                                 />
                             </span>
                         </Link>
-                        <MobileNav isAdmin={isAdmin} />
-
+                        <MobileNav user={session?.user} />
                     </div>
 
                     {/* Desktop Navigation */}
