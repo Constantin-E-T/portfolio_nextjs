@@ -51,13 +51,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 mb-8">
           {/* Branding & Bio */}
           <div className="lg:col-span-6 space-y-4">
-            <Link 
-              href="/" 
-              className="text-xl font-bold inline-block hover:text-primary transition-colors relative group"
-            >
-              Constantin Emilian
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-            </Link>
+            <h2 className="text-xl font-bold hover:text-primary transition-colors">
+              <Link 
+                href="/" 
+                className="inline-block relative group"
+              >
+                Constantin Emilian
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+            </h2>
             <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
               Crafting exceptional digital experiences since 2018. Specializing in full-stack development 
               with a passion for clean code and intuitive design.
@@ -109,9 +111,9 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="lg:col-span-6 flex justify-end">
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold tracking-wide uppercase text-primary">
+              <h2 className="text-sm font-semibold tracking-wide uppercase text-primary">
                 Navigation
-              </h4>
+              </h2>
               <nav>
                 <ul className="space-y-2 text-right">
                   {['Home', 'About', 'Projects', 'Contact', 'Blog'].map((item) => (
