@@ -12,7 +12,14 @@ export default function Login() {
         <div className="min-h-screen w-screen flex items-center justify-center">
             <div className="w-full flex max-w-sm flex-col items-center justify-center">
                 <Link href="/" className="flex items-center gap-2 self-center">
-                    <Image src={Logo} alt="Logo" className="size-24" />
+                    <Image
+                        src={Logo}
+                        alt="Logo"
+                        className="size-24"
+                        priority={true}  // Add priority for login page logo
+                        width={96}       // Specify exact dimensions
+                        height={96}
+                    />
                     <h1 className="text-2xl font-bold">CONN<span className="text-primary">DIGITAL</span></h1>
                 </Link>
                 {/* Login Form */}

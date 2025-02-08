@@ -12,19 +12,26 @@ import { UserNav } from "./UserNav";
 export async function Navbar() {
     const session = await auth();
     const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    
+
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <div className="flex items-center gap-4">
-                        <Link 
-                            href="/" 
+                        <Link
+                            href="/"
                             className="text-xl font-bold relative group"
                         >
                             <span className="relative">
-                                <Image src={Logo} alt="Logo" className="size-20" />
+                                <Image
+                                    src={Logo}
+                                    alt="Logo"
+                                    className="size-20"
+                                    priority={true}  // Add priority for above-the-fold logo
+                                    width={80}       // Specify exact dimensions
+                                    height={80}
+                                />
                             </span>
                         </Link>
                         <MobileNav isAdmin={isAdmin} />
@@ -38,7 +45,7 @@ export async function Navbar() {
                     <div className="flex items-center gap-4">
                         {session?.user ? (
                             <UserNav user={session.user} isAdmin={isAdmin} />
-                        ) : ( 
+                        ) : (
                             <Link href="/login" className="hidden md:block">
                                 <Button variant="outline">Login</Button>
                             </Link>
