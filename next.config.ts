@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
       'avatar.vercel.sh'                  
     ],
   },
+  // Modern optimization features
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    scrollRestoration: true,
+  },
+  // Headers configuration
   async headers() {
     return [
       {
@@ -39,11 +45,23 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff'
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()'
           }
         ]
       },
       {
-        source: '/logo/:path*',
+        source: '/(logo|static|_next/static)/:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -52,7 +70,11 @@ const nextConfig: NextConfig = {
         ]
       }
     ];
-  }
+  },
+  compress: true,
+  poweredByHeader: false,
+  // Improved production source maps
+  productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;
