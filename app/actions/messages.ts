@@ -9,8 +9,10 @@ type MessageResponse = {
   error?: string
 }
 
-// Modified to match useFormState expectations
-export async function submitMessage(_prevState: MessageResponse | null, formData: FormData): Promise<MessageResponse> {
+export async function submitMessage(
+  _prevState: MessageResponse | null, 
+  formData: FormData
+): Promise<MessageResponse> {
   try {
     const session = await auth()
     
@@ -27,13 +29,14 @@ export async function submitMessage(_prevState: MessageResponse | null, formData
       }
     }
 
+    // Create message with user ID if authenticated
     const messageData = {
       name,
       email,
       subject,
       content,
       status: "UNREAD" as const,
-      userId: session?.user?.id || null
+      ...(session?.user?.id && { userId: session.user.id })
     }
 
     await prisma.message.create({
@@ -49,6 +52,39 @@ export async function submitMessage(_prevState: MessageResponse | null, formData
     return {
       success: false,
       error: "Failed to send message. Please try again later."
+    }
+  }
+}
+
+export async function updateMessageStatus(
+  messageId: string,
+  status: 'READ' | 'UNREAD'
+): Promise<MessageResponse> {
+  try {
+    const session = await auth()
+    
+    // Check if user is authenticated and has admin role
+    if (!session?.user) {
+      return {
+        success: false,
+        error: "Unauthorized"
+      }
+    }
+
+    await prisma.message.update({
+      where: { id: messageId },
+      data: { status }
+    })
+
+    return {
+      success: true
+    }
+
+  } catch (error) {
+    console.error('Error updating message:', error)
+    return {
+      success: false,
+      error: "Failed to update message status"
     }
   }
 }

@@ -34,6 +34,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt"
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Add user id to the token right after signin
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      // Add the user id to the session
+      if (session.user) {
+        session.user.id = token.id as string
+      }
+      return session
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      else if (new URL(url).origin === baseUrl) return url
+      return baseUrl
+    }
+  },
   cookies: {
     sessionToken: {
       name: `next-auth.session-token`,
@@ -58,14 +79,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   trustHost: true,
   debug: isDevelopment,
-  ...(isDevelopment ? {} : { trustHost: true }),
-  callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url
-      return baseUrl
-    }
-  }
+  ...(isDevelopment ? {} : { trustHost: true })
 })

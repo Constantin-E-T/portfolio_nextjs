@@ -9,8 +9,10 @@ import {
   FolderKanban, 
   FileText, 
   User, 
-  Mail,
+  MessageSquare,  
+  Contact       
 } from 'lucide-react'
+
 import type { LucideIcon } from 'lucide-react'
 
 interface NavItem {
@@ -24,7 +26,8 @@ const navItems: NavItem[] = [
   { href: '/admin/projects', label: 'Projects', icon: FolderKanban },
   { href: '/admin/blog', label: 'Blog Posts', icon: FileText },
   { href: '/admin/about', label: 'About', icon: User },
-  { href: '/admin/contact', label: 'Contact', icon: Mail },
+  { href: '/admin/messages', label: 'Messages', icon: MessageSquare },
+  { href: '/admin/contact', label: 'Contact', icon: Contact },
 ]
 
 export function AdminNav() {
