@@ -1,3 +1,5 @@
+// prisma/schema.prisma
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = []
@@ -8,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URLS")
 }
 
+enum Role {
+  OWNER
+  ADMIN
+  USER
+}
 
 model User {
   id            String    @id @default(cuid())
@@ -15,10 +22,28 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
+  role          Role      @default(USER)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  messages      Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  content   String   @db.Text
+  status    String   @default("UNREAD")
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([userId])
 }
 
 model Account {
