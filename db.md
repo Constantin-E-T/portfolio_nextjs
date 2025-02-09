@@ -103,3 +103,18 @@ Copy
 Edit
 pnpm prisma migrate deploy
 ✅ Now, your Prisma setup is properly reset, and authentication should work!
+
+
+
+var preDeployFunction = function (captainAppObj, dockerUpdateObject) {
+    return Promise.resolve()
+        .then(function () {
+            // Only runs migrations, doesn't delete data
+            dockerUpdateObject.TaskTemplate.ContainerSpec.Command = [
+                '/bin/sh',
+                '-c',
+                'npx prisma migrate deploy && node .next/standalone/server.js'
+            ];
+            return dockerUpdateObject;
+        });
+};
