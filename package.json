@@ -11,7 +11,7 @@
     "start:prod": "next start -p 80",
     "start:test": "NODE_ENV=test next start",
     "lint": "next lint",
-    "deploy": "caprover deploy -h https://captain.serverplus.org -p changemeplease -a conndev -b main"
+    "deploy": "caprover deploy -h https://captain.serverplus.org -p captain42 -a conndev -b main"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
