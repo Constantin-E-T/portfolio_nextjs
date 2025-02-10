@@ -1,24 +1,27 @@
-# Update your Dockerfile
 FROM node:20-alpine
+
+# Install pnpm
+RUN npm install -g pnpm
+
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
-RUN npm install
+COPY package*.json pnpm-lock.yaml ./
+RUN pnpm install
 
-# Copy prisma schema
+# Copy prisma schema and migrations
 COPY prisma ./prisma/
 
-# Generate Prisma Client but don't run migrations
-RUN npx prisma generate
+# Generate Prisma Client
+RUN pnpm prisma generate
 
 # Copy rest of the app
 COPY . .
 
 # Build the app
-RUN npm run build
+RUN pnpm run build
 
 EXPOSE 80
 
-# Modify the start command to not include migrations
-CMD ["npm", "run", "start:prod"]
+# Start command that includes migrations
+CMD ["pnpm", "run", "start:prod"]

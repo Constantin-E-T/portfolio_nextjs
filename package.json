@@ -8,7 +8,8 @@
     "build": "prisma generate && next build",
     "build:test": "NODE_ENV=test next build",
     "start": "next start",
-    "start:prod": "next start -p 80",
+    "start:prod": "prisma migrate deploy && next start -p 80",
+    "db:migrate": "prisma migrate deploy",
     "start:test": "NODE_ENV=test next start",
     "lint": "next lint",
     "deploy": "caprover deploy -h https://captain.serverplus.org -p captain42 -a conndev -b main"
