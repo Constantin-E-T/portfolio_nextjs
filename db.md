@@ -118,3 +118,58 @@ var preDeployFunction = function (captainAppObj, dockerUpdateObject) {
             return dockerUpdateObject;
         });
 };
+
+
+
+
+
+
+
+
+var preDeployFunction = function (captainAppObj, dockerUpdateObject) {
+
+    return Promise.resolve()
+
+        .then(function () {
+
+            // Use npm start:prod after migrations
+
+            dockerUpdateObject.TaskTemplate.ContainerSpec.Command = [
+
+                '/bin/sh',
+
+                '-c',
+
+                'npx prisma migrate deploy && npm run start:prod'
+
+            ];
+
+            
+
+            // Ensure environment variables are properly set
+
+            if (!dockerUpdateObject.TaskTemplate.ContainerSpec.Env) {
+
+                dockerUpdateObject.TaskTemplate.ContainerSpec.Env = [];
+
+            }
+
+            
+
+            // Set environment variables for Next.js
+
+            dockerUpdateObject.TaskTemplate.ContainerSpec.Env.push(
+
+                'NODE_ENV=production',
+
+                'PORT=80'
+
+            );
+
+            
+
+            return dockerUpdateObject;
+
+        });
+
+};
