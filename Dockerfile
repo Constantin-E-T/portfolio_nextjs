@@ -23,5 +23,5 @@ RUN pnpm run build
 
 EXPOSE 80
 
-# Start command that includes migrations
+# Use start:prod which includes migrations
 CMD ["pnpm", "run", "start:prod"]
