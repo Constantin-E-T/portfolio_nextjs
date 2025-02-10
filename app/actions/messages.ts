@@ -55,36 +55,3 @@ export async function submitMessage(
     }
   }
 }
-
-export async function updateMessageStatus(
-  messageId: string,
-  status: 'READ' | 'UNREAD'
-): Promise<MessageResponse> {
-  try {
-    const session = await auth()
-    
-    // Check if user is authenticated and has admin role
-    if (!session?.user) {
-      return {
-        success: false,
-        error: "Unauthorized"
-      }
-    }
-
-    await prisma.message.update({
-      where: { id: messageId },
-      data: { status }
-    })
-
-    return {
-      success: true
-    }
-
-  } catch (error) {
-    console.error('Error updating message:', error)
-    return {
-      success: false,
-      error: "Failed to update message status"
-    }
-  }
-}

@@ -16,6 +16,13 @@ enum Role {
   USER
 }
 
+enum MessageStatus {
+  UNREAD
+  READ
+  ARCHIVED
+  DELETED
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -28,47 +35,56 @@ model User {
   accounts      Account[]
   sessions      Session[]
   messages      Message[]
+  replies       Reply[]    // Add relation to replies
+
+  @@index([role])
+  @@index([email])
 }
 
 model Message {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   name      String
   email     String
   subject   String
-  content   String   @db.Text
-  status    String   @default("UNREAD")
+  content   String        @db.Text
+  status    MessageStatus @default(UNREAD)
   userId    String?
-  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  threadId  String?  // New field for threading
+  user      User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  threadId  String?
   thread    MessageThread? @relation(fields: [threadId], references: [id], onDelete: SetNull)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@index([status])
   @@index([userId])
-  @@index([threadId])  // Index for efficient querying by thread
+  @@index([threadId])
+  @@index([email])
 }
 
-// New model to group related messages
 model MessageThread {
   id        String    @id @default(cuid())
-  messages  Message[] // Messages belonging to the thread
-  replies   Reply[]   // Replies within the thread
+  title     String?   // Optional thread title
+  status    MessageStatus @default(UNREAD)
+  messages  Message[]
+  replies   Reply[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([status])
 }
 
-// New model to handle replies within a thread
 model Reply {
   id          String        @id @default(cuid())
   content     String        @db.Text
   threadId    String
   thread      MessageThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
-  createdBy   String?       // ID of the admin/user who replied
+  userId      String        // Changed from createdBy to match User relation
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
 
-  @@index([threadId])  // Index for efficient querying by thread
+  @@index([threadId])
+  @@index([userId])
 }
 
 model Account {
@@ -76,18 +92,19 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
+  refresh_token     String?   @db.Text
+  access_token      String?   @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?
+  id_token          String?   @db.Text
   session_state     String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -97,12 +114,15 @@ model Session {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model VerificationToken {
   identifier String
-  token      String
+  token      String   @db.Text
   expires    DateTime
 
   @@id([identifier, token])
+  @@index([identifier])
 }
