@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { CheckCircle2, Search } from "lucide-react"
 import { MessageLookupForm } from "./LookupForm"
-import { ReferenceDisplay } from "./ReferenceDisplay"
+import { ReferenceDisplay } from "@/app/components/messages/shared/ReferenceDisplay"
 
 interface ThankYouContentProps {
     messageRef?: string

@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
-import { handleSignOut } from "@/app/actions/auth"
+import { handleSignOut } from "@/app/actions/authentication/auth"
 import { useRouter } from 'next/navigation'
 
 interface UserNavProps {

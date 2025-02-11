@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { auth } from "@/app/utils/auth"
-import { ThankYouContent } from "@/components/messages/ThankYouContent"
+import { ThankYouContent } from "@/components/messages/unauth/ThankYouContent"
 
 export const metadata = {
   title: 'Thank You | Message Sent',

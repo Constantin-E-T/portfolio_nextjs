@@ -1,5 +1,5 @@
 // app/(main)/messages/lookup/page.tsx
-import { MessageLookupForm } from "@/components/messages/LookupForm"
+import { MessageLookupForm } from "@/app/components/messages/unauth/LookupForm"
 
 export const metadata = {
   title: 'Message Lookup | Constantin Emilian',

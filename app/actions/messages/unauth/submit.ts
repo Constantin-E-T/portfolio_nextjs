@@ -3,8 +3,8 @@
 
 import { prisma } from "@/app/utils/db"
 import { auth } from "@/app/utils/auth"
-import { MessageResponse } from "../types"
-import { validateMessageFields, checkRateLimit } from "./utils/validation"
+import { MessageResponse } from "@/app/actions/messages/shared/types/types"
+import { validateMessageFields, checkRateLimit } from "@/app/actions/messages/shared/utils/validation"
 import { revalidatePath } from "next/cache"
 
 export async function submitMessage(
