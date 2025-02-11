@@ -1,10 +1,11 @@
-// components/sections/contact/contact-content.tsx
+// app/components/sections/contact/contact-content.tsx
 'use client';
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Mail, MapPin, Globe, ArrowLeft } from 'lucide-react';
+import { Mail, MapPin, Globe, ArrowLeft, Search } from 'lucide-react';
 import { ContactForm } from "@/app/components/forms/ContactForm";
 
 export function ContactContent() {
@@ -47,6 +48,12 @@ export function ContactContent() {
               <motion.div className="flex items-center space-x-3 text-muted-foreground">
                 <Globe className="h-5 w-5" />
                 <span>Available for remote work worldwide</span>
+              </motion.div>
+              <motion.div className="flex items-center space-x-3 text-primary/80">
+                <Search className="h-5 w-5" />
+                <Link href="/messages/lookup" className="hover:text-primary">
+                  Look up existing message status
+                </Link>
               </motion.div>
             </motion.div>
 

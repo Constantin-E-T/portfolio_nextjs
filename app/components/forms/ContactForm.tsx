@@ -7,22 +7,39 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { GeneralSubmitButton } from "../general/SubmitButtons"
 import { submitMessage } from "@/app/actions/messages"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { useRouter } from "next/navigation"
 
 const initialState = {
   success: false,
   error: undefined,
-  remainingTime: undefined
+  remainingTime: undefined,
+  messageId: undefined,
+  redirect: undefined
 }
 
 export function ContactForm() {
+  const router = useRouter()
   const [state, formAction] = useActionState(submitMessage, initialState)
   const [timeLeft, setTimeLeft] = useState<number | undefined>(undefined)
+
+  // Handle redirects after successful submission
+  useEffect(() => {
+    if (state?.success) {
+      // If there's a redirect path (authenticated users), use it
+      if (state.redirect) {
+        router.push(state.redirect)
+      } else if (state.messageId) {
+        // For unauthenticated users, redirect to thank you page with reference
+        router.push(`/thank-you?ref=${state.messageId}`)
+      }
+    }
+  }, [state?.success, state?.redirect, state?.messageId, router])
 
   // Handle countdown timer for rate limit
   useEffect(() => {
     if (state?.remainingTime) {
-      setTimeLeft(Math.ceil(state.remainingTime / (60 * 1000))) // Convert to minutes
-
+      setTimeLeft(Math.ceil(state.remainingTime / (60 * 1000)))
+      
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev && prev > 0) {
@@ -31,7 +48,7 @@ export function ContactForm() {
           clearInterval(timer)
           return undefined
         })
-      }, 60000) // Update every minute
+      }, 60000)
 
       return () => clearInterval(timer)
     }
@@ -45,7 +62,6 @@ export function ContactForm() {
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-4">
-
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
@@ -109,14 +125,6 @@ export function ContactForm() {
                   ? `${state.error} (${timeLeft} minutes remaining)`
                   : state.error
                 }
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {state?.success && (
-            <Alert className="border-green-500 dark:border-green-400">
-              <AlertDescription className="text-green-600 dark:text-green-400">
-                Message sent successfully!
               </AlertDescription>
             </Alert>
           )}

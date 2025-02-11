@@ -1,11 +1,11 @@
 // app/components/layout/FooterMain.tsx
 
+// app/components/layout/FooterMain.tsx
 'use client';
 
 import Link from 'next/link';
-// import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { FileDown, Mail } from "lucide-react";
+import { FileDown, Mail, Search } from "lucide-react";
 import { GitHubLogoIcon, LinkedInLogoIcon, HeartIcon } from "@radix-ui/react-icons";
 import {
   Tooltip,
@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+
 
 const socialLinks = [
   { 
@@ -35,6 +36,14 @@ const socialLinks = [
   }
 ];
 
+const quickLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/messages/lookup', label: 'Message Lookup' },
+];
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const startYear = 2018;
@@ -51,22 +60,20 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-12 mb-8">
           {/* Branding & Bio */}
           <div className="lg:col-span-6 space-y-4">
-            <h2 className="text-xl font-bold hover:text-primary transition-colors">
-              <Link 
-                href="/" 
-                className="inline-block relative group"
-              >
-                Constantin Emilian
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-              </Link>
-            </h2>
+            <Link 
+              href="/" 
+              className="text-xl font-bold inline-block hover:text-primary transition-colors relative group"
+            >
+              Constantin Emilian
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+            </Link>
             <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
               Crafting exceptional digital experiences since 2018. Specializing in full-stack development 
               with a passion for clean code and intuitive design.
             </p>
             
-            {/* Social Links */}
-            <div className="flex items-center gap-2 pt-4">
+            {/* Social Links and Actions */}
+            <div className="flex flex-wrap items-center gap-2 pt-4">
               <TooltipProvider>
                 {socialLinks.map((item) => (
                   <Tooltip key={item.name}>
@@ -111,18 +118,21 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="lg:col-span-6 flex justify-end">
             <div className="space-y-4">
-              <h2 className="text-sm font-semibold tracking-wide uppercase text-primary">
-                Navigation
-              </h2>
+              <h4 className="text-sm font-semibold tracking-wide uppercase text-primary">
+                Quick Links
+              </h4>
               <nav>
-                <ul className="space-y-2 text-right">
-                  {['Home', 'About', 'Projects', 'Contact', 'Blog'].map((item) => (
-                    <li key={item}>
+                <ul className="space-y-2 text-left">
+                  {quickLinks.map((link) => (
+                    <li key={link.href}>
                       <Link
-                        href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                        href={link.href}
                         className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block"
                       >
-                        {item}
+                        {link.label}
+                        {link.href === '/messages/lookup' && (
+                          <Search className="inline-block ml-2 h-3 w-3" />
+                        )}
                       </Link>
                     </li>
                   ))}
