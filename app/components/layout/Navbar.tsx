@@ -1,4 +1,5 @@
 // app/components/layout/Navbar.tsx
+
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/logo/logo.svg";
@@ -8,10 +9,11 @@ import { auth } from "@/app/utils/auth";
 import { NavLinks } from "./NavLinks";
 import { MobileNav } from "./MobileNav";
 import { UserNav } from "./UserNav";
+import { hasRequiredRole } from "@/lib/types/auth";
 
 export async function Navbar() {
     const session = await auth();
-    const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    const isAdmin = session?.user ? hasRequiredRole(session.user.role, 'ADMIN') : false;
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">

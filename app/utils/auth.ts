@@ -5,12 +5,13 @@ import GitHub from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./db"
+import { Role } from "@prisma/client"
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 const baseUrl = isDevelopment ? 'http://localhost:3000' : 'https://conn.digital'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma), 
   providers: [
     GitHub({
       clientId: process.env.AUTH_GITHUB_ID!,
@@ -36,16 +37,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Add user id to the token right after signin
       if (user) {
         token.id = user.id
+        token.role = user.role || 'USER'
       }
       return token
     },
     async session({ session, token }) {
-      // Add the user id to the session
       if (session.user) {
         session.user.id = token.id as string
+        session.user.role = token.role as Role
       }
       return session
     },
@@ -55,6 +56,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return baseUrl
     }
   },
+
   cookies: {
     sessionToken: {
       name: `next-auth.session-token`,

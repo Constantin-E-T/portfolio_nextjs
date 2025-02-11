@@ -1,8 +1,12 @@
 // middleware.ts
+
 import { NextResponse } from 'next/server'
 import { auth } from '@/app/utils/auth'
- 
-export default auth((req) => {
+import { hasRequiredRole } from '@/lib/types/auth'
+
+export default auth(async (req) => {
+
+
   // Handle old routes and redirects
   const oldRoutes = ['/register']
   if (oldRoutes.some(route => req.nextUrl.pathname.startsWith(route))) {
@@ -17,7 +21,7 @@ export default auth((req) => {
       return NextResponse.redirect(new URL('/login', req.url))
     }
 
-    if (user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+    if (!hasRequiredRole(user.role, 'ADMIN')) {
       return NextResponse.redirect(new URL('/', req.url))
     }
   }
@@ -36,6 +40,6 @@ export const config = {
   matcher: [
     '/admin/:path*',
     '/register',
-    '/:path*/',  // Match paths with trailing slashes
+    '/:path*/',
   ]
 }
