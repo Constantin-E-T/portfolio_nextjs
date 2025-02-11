@@ -1,18 +1,41 @@
 // app/components/forms/ContactForm.tsx
 'use client'
 
-import { useActionState } from "react" // Updated import
+import { useActionState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { GeneralSubmitButton } from "../general/SubmitButtons"
 import { submitMessage } from "@/app/actions/messages"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 const initialState = {
   success: false,
-  error: undefined
+  error: undefined,
+  remainingTime: undefined
 }
 
 export function ContactForm() {
-  const [state, formAction] = useActionState(submitMessage, initialState) // Updated hook
+  const [state, formAction] = useActionState(submitMessage, initialState)
+  const [timeLeft, setTimeLeft] = useState<number | undefined>(undefined)
+
+  // Handle countdown timer for rate limit
+  useEffect(() => {
+    if (state?.remainingTime) {
+      setTimeLeft(Math.ceil(state.remainingTime / (60 * 1000))) // Convert to minutes
+
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev && prev > 0) {
+            return prev - 1
+          }
+          clearInterval(timer)
+          return undefined
+        })
+      }, 60000) // Update every minute
+
+      return () => clearInterval(timer)
+    }
+  }, [state?.remainingTime])
 
   return (
     <Card>
@@ -22,7 +45,8 @@ export function ContactForm() {
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-2">
+
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Name
@@ -77,22 +101,33 @@ export function ContactForm() {
               placeholder="Your message here..."
             />
           </div>
-          
+
           {state?.error && (
-            <p className="text-sm text-destructive">{state.error}</p>
+            <Alert variant="destructive">
+              <AlertDescription>
+                {timeLeft
+                  ? `${state.error} (${timeLeft} minutes remaining)`
+                  : state.error
+                }
+              </AlertDescription>
+            </Alert>
           )}
+
           {state?.success && (
-            <p className="text-sm text-green-600 dark:text-green-500">Message sent successfully!</p>
+            <Alert className="border-green-500 dark:border-green-400">
+              <AlertDescription className="text-green-600 dark:text-green-400">
+                Message sent successfully!
+              </AlertDescription>
+            </Alert>
           )}
 
           <GeneralSubmitButton
             text="Send Message"
             width="w-full"
+            disabled={timeLeft !== undefined}
           />
         </form>
       </CardContent>
     </Card>
   )
 }
-
-
