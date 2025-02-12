@@ -2,7 +2,7 @@
 'use server'
 
 import { prisma } from "@/app/utils/db"
-import { MessageLookupResult } from "../types"
+import { MessageLookupResult } from "@/app/actions/messages/shared/types/types"
 import { z } from "zod"
 
 const lookupSchema = z.object({
@@ -35,7 +35,8 @@ export async function lookupMessage(
       select: {
         status: true,
         subject: true,
-        createdAt: true
+        createdAt: true,
+        content: true
       }
     })
 
@@ -50,8 +51,9 @@ export async function lookupMessage(
       success: true,
       message: {
         status: message.status,
-        subject: message.subject,
-        createdAt: message.createdAt
+        createdAt: message.createdAt,
+        content: message.content,
+        subject: message.subject
       }
     }
 

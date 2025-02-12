@@ -1,4 +1,4 @@
-// app/actions/messages/utils/validation.ts
+// app/actions/messages/shared/utils/validation.ts
 
 import { z } from "zod" 
 import { PrismaClient } from "@prisma/client"
