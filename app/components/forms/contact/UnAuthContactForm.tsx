@@ -1,14 +1,13 @@
 // app/components/forms/ContactForm.tsx
 'use client'
 
-import { useActionState } from "react" // Changed from useFormState
+import { useActionState } from "react"
 import { useState, useEffect } from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { GeneralSubmitButton } from "../general/SubmitButtons"
-import { submitMessage, submitAuthMessage } from "@/app/actions/messages"
+import { GeneralSubmitButton } from "../../general/SubmitButtons"
+import { submitMessage } from "@/app/actions/messages"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useRouter } from "next/navigation"
-import { useUser } from "@/lib/hooks/use-user"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
@@ -20,14 +19,9 @@ const initialState = {
   redirect: undefined
 }
 
-export function ContactForm() {
+export function UnAuthContactForm() {
   const router = useRouter()
-  const { user, loading } = useUser()
-  const [state, formAction] = useActionState( // Changed from useFormState
-    user ? submitAuthMessage : submitMessage, 
-    initialState
-  )
-
+  const [state, formAction] = useActionState(submitMessage, initialState)
   const [timeLeft, setTimeLeft] = useState<number | undefined>(undefined)
 
   // Handle redirects after successful submission
@@ -45,7 +39,7 @@ export function ContactForm() {
   useEffect(() => {
     if (state?.remainingTime) {
       setTimeLeft(Math.ceil(state.remainingTime / (60 * 1000)))
-      
+
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev && prev > 0) {
@@ -60,51 +54,42 @@ export function ContactForm() {
     }
   }, [state?.remainingTime])
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>Get in Touch</CardTitle>
         <CardDescription>
-          {user 
-            ? `Logged in as ${user.email}`
-            : "Send me a message and I'll get back to you as soon as possible."
-          }
+          Send me a message and I&apos;ll get back to you as soon as possible.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction} className="space-y-4">
-          {!user && (
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium leading-none">
-                  Name
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  placeholder="John Doe"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium leading-none">
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="john@example.com"
-                />
-              </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-sm font-medium leading-none">
+                Name
+              </label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="John Doe"
+              />
             </div>
-          )}
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium leading-none">
+                Email
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="john@example.com"
+              />
+            </div>
+          </div>
 
           <div className="space-y-2">
             <label htmlFor="subject" className="text-sm font-medium leading-none">
