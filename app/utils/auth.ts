@@ -65,7 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         sameSite: 'lax',
         path: '/',
         secure: !isDevelopment,
-        domain: isDevelopment ? 'localhost' : '.conn.digital'
+        domain: isDevelopment ? 'localhost' : 'conn.digital'
       }
     },
     pkceCodeVerifier: {
@@ -75,7 +75,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         sameSite: 'lax',
         path: '/',
         secure: !isDevelopment,
-        domain: isDevelopment ? 'localhost' : '.conn.digital'
+        domain: isDevelopment ? 'localhost' : 'conn.digital'
       }
     }
   },
