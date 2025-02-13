@@ -7,10 +7,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Mail, MapPin, Globe, ArrowLeft, Search } from 'lucide-react'
 import { UnAuthContactForm } from "@/app/components/forms/contact/UnAuthContactForm"
-import { AuthContactForm } from "@/app/components/forms/contact/AuthContactForm"
-import { Session } from "next-auth"
 
-export default function ContactForm({ session }: { session: Session | null }) {
+
+export default function ContactForm() {
   const [showForm, setShowForm] = useState(false)
 
   return (
@@ -88,7 +87,7 @@ export default function ContactForm({ session }: { session: Session | null }) {
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               Back
             </Button>
-            {session?.user ? <AuthContactForm session={session} /> : <UnAuthContactForm />}
+            <UnAuthContactForm />
           </motion.div>
         )}
       </AnimatePresence>
