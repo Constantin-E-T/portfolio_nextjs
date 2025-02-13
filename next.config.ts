@@ -11,14 +11,31 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: [
-      'constantin.serverplus.org',
-      'conn.digital',
-      'www.conn.digital',
-      'avatars.githubusercontent.com',    
-      'avatar.vercel.sh'                  
-    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'constantin.serverplus.org'
+      },
+      {
+        protocol: 'https',
+        hostname: 'conn.digital'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.conn.digital'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatar.vercel.sh'
+      }
+    ]
   },
+  
+  
   // Modern optimization features
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
