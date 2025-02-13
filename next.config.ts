@@ -40,10 +40,11 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
     scrollRestoration: true,
+    serverActions: {
+      allowedOrigins: ['localhost:3000', 'conn.digital']
+    }
   },
-  serverActions: {
-    allowedOrigins: ['localhost:3000', 'conn.digital']
-  },
+  
   // Headers configuration
   async headers() {
     return [
@@ -93,7 +94,6 @@ const nextConfig: NextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-  // Improved production source maps
   productionBrowserSourceMaps: true,
 };
 
