@@ -1,4 +1,4 @@
-// app/actions/auth.ts
+// app/actions/authentication/auth.ts
 "use server"
 
 import { signOut } from "@/app/utils/auth"
