@@ -52,22 +52,16 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Admin routes - no caching
+        // Admin routes - no caching for RSC requests
         source: '/admin/:path*',
         headers: [
           {
             key: 'Cache-Control',
             value: 'no-store, must-revalidate'
-          }
-        ]
-      },
-      {
-        // API routes - no caching
-        source: '/api/:path*',
-        headers: [
+          },
           {
-            key: 'Cache-Control',
-            value: 'no-store, must-revalidate'
+            key: 'Vary',
+            value: 'RSC, Next-Router-State-Tree, Next-Router-Prefetch'
           }
         ]
       },
@@ -78,15 +72,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable'
-          }
-        ]
-      },
-      {
-        source: '/logo/favicon/site.webmanifest',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'application/manifest+json; charset=utf-8'
           }
         ]
       },
@@ -121,11 +106,7 @@ const nextConfig: NextConfig = {
         ]
       }
     ];
-  },
-
-  compress: true,
-  poweredByHeader: false,
-  productionBrowserSourceMaps: true,
+  }
 };
 
 export default nextConfig;
