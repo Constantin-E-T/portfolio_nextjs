@@ -11,12 +11,68 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['constantin.serverplus.org', 'conn.digital', 'www.conn.digital'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'constantin.serverplus.org'
+      },
+      {
+        protocol: 'https',
+        hostname: 'conn.digital'
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.conn.digital'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatar.vercel.sh'
+      }
+    ]
   },
+
+  // Modern optimization features
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    scrollRestoration: true,
+    serverActions: {
+      allowedOrigins: ['localhost:3000', 'conn.digital']
+    }
+  },
+
+  // Headers configuration
   async headers() {
     return [
       {
-        // Static assets can be cached aggressively
+        // Admin routes - no caching
+        source: '/admin/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate'
+          }
+        ]
+      },
+      {
+        // API routes - no caching
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, must-revalidate'
+          }
+        ]
+      },
+      {
+        // Static assets
         source: '/(logo|static|_next/static)/:path*',
         headers: [
           {
@@ -31,16 +87,6 @@ const nextConfig: NextConfig = {
           {
             key: 'Content-Type',
             value: 'application/manifest+json; charset=utf-8'
-          }
-        ]
-      },
-      {
-        // For dynamic routes (like your admin pages)
-        source: '/admin/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'no-store, must-revalidate'
           }
         ]
       },
@@ -75,7 +121,11 @@ const nextConfig: NextConfig = {
         ]
       }
     ];
-  }
+  },
+
+  compress: true,
+  poweredByHeader: false,
+  productionBrowserSourceMaps: true,
 };
 
 export default nextConfig;
