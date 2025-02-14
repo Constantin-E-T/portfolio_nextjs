@@ -12,8 +12,7 @@ import { Suspense } from 'react'
 
 
 // Add metadata for route segment config
-export const dynamic = 'force-dynamic'
-
+export const revalidate = 0
 
 // Loading component for messages
 function MessagesLoading() {

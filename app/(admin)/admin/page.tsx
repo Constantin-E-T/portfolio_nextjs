@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from 'react'
 
 // Add metadata for route segment config
-export const dynamic = 'force-dynamic'
+export const revalidate = 0 // revalidate this page on every request
 
 // Loading component for messages
 function MessagesLoading() {
