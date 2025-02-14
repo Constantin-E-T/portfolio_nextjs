@@ -10,32 +10,31 @@ import { SelectAllMessages } from "@/app/components/messages/admin/SelectAllMess
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from 'react'
 
-
-// Add metadata for route segment config
-export const revalidate = 0
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic'
 
 // Loading component for messages
 function MessagesLoading() {
   return (
-    <div className="mt-8 space-y-4">
+    <div className="mt-8 space-y-4 animate-pulse">
       {[1, 2, 3, 4, 5].map((i) => (
-        <Card key={i} className="p-6">
+        <Card key={i} className="p-6 bg-muted/5">
           <div className="flex justify-between items-start">
             <div className="flex items-start gap-4">
-              <Skeleton className="h-5 w-5" />
+            <Skeleton className="h-5 w-5 animate-pulse bg-muted-foreground/10" />
               <div>
-                <Skeleton className="h-5 w-[200px] mb-2" />
-                <Skeleton className="h-4 w-[250px] mb-2" />
-                <Skeleton className="h-4 w-[180px]" />
+                <Skeleton className="h-5 w-[200px] mb-2 bg-muted-foreground/10" />
+                <Skeleton className="h-4 w-[250px] mb-2 bg-muted-foreground/10" />
+                <Skeleton className="h-4 w-[180px] bg-muted-foreground/10" />
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Skeleton className="h-6 w-[60px] rounded-full" />
-              <Skeleton className="h-8 w-8" />
+              <Skeleton className="h-6 w-[60px] rounded-full bg-muted-foreground/10" />
+              <Skeleton className="h-8 w-8 bg-muted-foreground/10" />
             </div>
           </div>
-          <Skeleton className="mt-4 h-4 w-full" />
-          <Skeleton className="mt-4 h-3 w-[200px]" />
+          <Skeleton className="mt-4 h-4 w-full bg-muted-foreground/10" />
+          <Skeleton className="mt-4 h-3 w-[200px] bg-muted-foreground/10" />
         </Card>
       ))}
     </div>
@@ -141,7 +140,10 @@ export default async function AdminMessages() {
         <BatchActions />
       </div>
 
-      <Suspense fallback={<MessagesLoading />}>
+      <Suspense 
+        key={new Date().getTime()}
+        fallback={<MessagesLoading />}
+      >
         <MessagesList />
       </Suspense>
     </div>

@@ -10,23 +10,24 @@ import { MessageSquare, FolderKanban, FileText } from 'lucide-react'
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from 'react'
 
-// Add metadata for route segment config
-export const revalidate = 0 // revalidate this page on every request
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic'
 
 // Loading component for messages
 function MessagesLoading() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-pulse">
       {[1, 2, 3, 4, 5].map((i) => (
-        <Card key={i} className="p-4">
+        <Card key={i} className="p-4 bg-muted/5">
           <div className="flex items-center justify-between">
+          <Skeleton className="h-5 w-5 animate-pulse bg-muted-foreground/10" />
             <div>
-              <Skeleton className="h-5 w-[200px] mb-2" />
-              <Skeleton className="h-4 w-[150px]" />
+              <Skeleton className="h-5 w-[200px] mb-2 bg-muted-foreground/10" />
+              <Skeleton className="h-4 w-[150px] bg-muted-foreground/10" />
             </div>
             <div className="flex items-center gap-4">
-              <Skeleton className="h-6 w-[60px] rounded-full" />
-              <Skeleton className="h-4 w-[100px]" />
+              <Skeleton className="h-6 w-[60px] rounded-full bg-muted-foreground/10" />
+              <Skeleton className="h-4 w-[100px] bg-muted-foreground/10" />
             </div>
           </div>
         </Card>
@@ -42,10 +43,10 @@ function StatsLoading() {
       {[1, 2, 3].map((i) => (
         <div key={i} className="rounded-lg border bg-card p-6">
           <div className="flex items-center gap-2">
-            <Skeleton className="h-5 w-5" />
-            <Skeleton className="h-5 w-[100px]" />
+            <Skeleton className="h-5 w-5 bg-muted-foreground/10" />
+            <Skeleton className="h-5 w-[100px] bg-muted-foreground/10" />
           </div>
-          <Skeleton className="mt-2 h-9 w-[60px]" />
+          <Skeleton className="mt-2 h-9 w-[60px] bg-muted-foreground/10" />
         </div>
       ))}
     </div>
@@ -178,7 +179,10 @@ export default async function AdminDashboard() {
         Manage your portfolio content from here.
       </p>
 
-      <Suspense fallback={<StatsLoading />}>
+      <Suspense 
+        key={`stats-${new Date().getTime()}`}
+        fallback={<StatsLoading />}
+      >
         <DashboardStats />
       </Suspense>
 
@@ -203,7 +207,10 @@ export default async function AdminDashboard() {
           </div>
 
           <TabsContent value="messages">
-            <Suspense fallback={<MessagesLoading />}>
+            <Suspense 
+              key={`messages-${new Date().getTime()}`}
+              fallback={<MessagesLoading />}
+            >
               <RecentMessages />
             </Suspense>
           </TabsContent>
