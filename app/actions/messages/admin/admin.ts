@@ -46,3 +46,52 @@ export async function deleteMessage(messageId: string) {
     return { success: false, error: "Failed to delete message" }
   }
 }
+
+export async function batchUpdateMessageStatus(messageIds: string[], status: MessageStatus) {
+  const session = await auth()
+  
+  if (!session?.user) {
+    throw new Error("Unauthorized")
+  }
+
+  try {
+    await prisma.$transaction(
+      messageIds.map(id => 
+        prisma.message.update({
+          where: { id },
+          data: { status }
+        })
+      )
+    )
+
+    revalidatePath("/admin/messages")
+    return { success: true }
+  } catch (error) {
+    console.error("Failed to update messages status:", error)
+    return { success: false, error: "Failed to update messages status" }
+  }
+}
+
+export async function batchDeleteMessages(messageIds: string[]) {
+  const session = await auth()
+  
+  if (!session?.user) {
+    throw new Error("Unauthorized")
+  }
+
+  try {
+    await prisma.message.deleteMany({
+      where: {
+        id: {
+          in: messageIds
+        }
+      }
+    })
+
+    revalidatePath("/admin/messages")
+    return { success: true }
+  } catch (error) {
+    console.error("Failed to delete messages:", error)
+    return { success: false, error: "Failed to delete messages" }
+  }
+}

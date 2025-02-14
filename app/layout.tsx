@@ -79,7 +79,7 @@ export const metadata: Metadata = {
       }
     ],
   },
-  manifest: '/logo/favicon/site.webmanifest',
+  manifest: '/api/manifest',
   openGraph: {
     type: 'website',
     locale: 'en_GB',
@@ -124,13 +124,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/logo/favicon/site.webmanifest" />
+        <link rel="manifest" href="/api/manifest" />
         <link rel="canonical" href="https://conn.digital" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="preload" href="/logo/logo.svg" as="image" type="image/svg+xml" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-        <link rel="manifest" href="/logo/favicon/site.webmanifest" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <CountlyAnalytics />
