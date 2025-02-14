@@ -3,6 +3,7 @@ import { auth } from '@/app/utils/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from "@/app/utils/db"
 import { Card } from '@/app/components/ui/card'
+import { MessageActions } from "@/app/components/messages/admin/MessageActions"
 
 export default async function AdminMessages() {
   const session = await auth()
@@ -48,13 +49,19 @@ export default async function AdminMessages() {
                   </p>
                 )}
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs ${
-                message.status === 'UNREAD' 
-                  ? 'bg-primary/10 text-primary' 
-                  : 'bg-muted text-muted-foreground'
-              }`}>
-                {message.status}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className={`px-2 py-1 rounded-full text-xs ${
+                  message.status === 'UNREAD' 
+                    ? 'bg-primary/10 text-primary' 
+                    : 'bg-muted text-muted-foreground'
+                }`}>
+                  {message.status}
+                </span>
+                <MessageActions 
+                  messageId={message.id} 
+                  currentStatus={message.status}
+                />
+              </div>
             </div>
             <p className="mt-4 text-sm">{message.content}</p>
             <div className="mt-4 text-xs text-muted-foreground">

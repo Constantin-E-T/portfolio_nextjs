@@ -16,8 +16,8 @@ export default function Login() {
                         src={Logo}
                         alt="Logo"
                         className="size-24"
-                        priority={true}  // Add priority for login page logo
-                        width={96}       // Specify exact dimensions
+                        priority={true}  
+                        width={96}      
                         height={96}
                     />
                     <h1 className="text-2xl font-bold">CONN<span className="text-primary">DIGITAL</span></h1>

@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import MessageHistory from "@/components/messages/auth/MessageHistory"
+import Link from "next/link";
 import { 
   UserCircle, 
   Mail, 
@@ -60,7 +61,7 @@ export default async function ProfilePage() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Recent Messages</h2>
           <Button variant="outline" asChild>
-            <a href="/profile/messages">View All</a>
+            <Link href="/profile/messages">View All</Link>
           </Button>
         </div>
         <MessageHistory limit={5} />
