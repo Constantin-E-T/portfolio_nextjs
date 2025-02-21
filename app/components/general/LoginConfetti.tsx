@@ -1,3 +1,5 @@
+// app/components/general/LoginConfetti.tsx
+
 "use client";
 
 import { useEffect, useCallback, useRef } from 'react';
