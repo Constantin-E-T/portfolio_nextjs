@@ -30,7 +30,7 @@ const socialLinks = [
   },
   {
     name: "Email",
-    href: "mailto:constantin@woooba.io",
+    href: "mailto:conn@woooba.io",
     Icon: Mail,
     description: "Send me an email"
   }
