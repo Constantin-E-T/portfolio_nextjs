@@ -1,11 +1,10 @@
 // app/components/layout/FooterMain.tsx
-
-// app/components/layout/FooterMain.tsx
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FileDown, Mail, Search } from "lucide-react";
+import { FileDown, Mail, Search, ExternalLink } from "lucide-react";
 import { GitHubLogoIcon, LinkedInLogoIcon, HeartIcon } from "@radix-ui/react-icons";
 import {
   Tooltip,
@@ -13,7 +12,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 
 const socialLinks = [
   { 
@@ -41,16 +39,39 @@ const quickLinks = [
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Projects' },
   { href: '/contact', label: 'Contact' },
-  { href: '/messages/lookup', label: 'Message Lookup' },
+  { href: '/messages/lookup', label: 'Message Lookup', icon: Search },
 ];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const startYear = 2018;
   const yearsOfExperience = currentYear - startYear;
+  
+  // State to track loading states for different actions
+  const [activeAction, setActiveAction] = useState<string | null>(null);
 
   const handleDownloadCV = () => {
-    window.open('/cv/EmilianCV.pdf', '_blank');
+    // Set loading state
+    setActiveAction('cv');
+    
+    // Use a timeout to ensure the loading state is visible
+    setTimeout(() => {
+      window.open('/cv/EmilianCV.pdf', '_blank');
+      // Reset loading state after a delay
+      setTimeout(() => setActiveAction(null), 500);
+    }, 300);
+  };
+
+  const handleSocialLink = (name: string, href: string) => {
+    // Set loading state
+    setActiveAction(name);
+    
+    // Use a timeout to ensure the loading state is visible
+    setTimeout(() => {
+      window.open(href, '_blank');
+      // Reset loading state
+      setTimeout(() => setActiveAction(null), 500);
+    }, 300);
   };
 
   return (
@@ -78,16 +99,21 @@ export default function Footer() {
                 {socialLinks.map((item) => (
                   <Tooltip key={item.name}>
                     <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" className="relative" asChild>
-                        <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-primary transition-colors"
-                        >
-                          <item.Icon className="h-5 w-5" />
-                          <span className="sr-only">{item.name}</span>
-                        </a>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className={`relative ${activeAction === item.name ? 'animate-pulse bg-muted' : ''}`}
+                        onClick={() => handleSocialLink(item.name, item.href)}
+                        disabled={activeAction === item.name}
+                      >
+                        <item.Icon className="h-5 w-5" />
+                        {activeAction === item.name && (
+                          <span className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-md">
+                            <span className="sr-only">Opening {item.name}</span>
+                            <ExternalLink className="h-3 w-3 animate-ping" />
+                          </span>
+                        )}
+                        <span className="sr-only">{item.name}</span>
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent side="top" className="bg-primary text-primary-foreground">
@@ -101,9 +127,16 @@ export default function Footer() {
                       variant="ghost" 
                       size="icon" 
                       onClick={handleDownloadCV}
-                      className="hover:text-primary transition-colors"
+                      className={`relative ${activeAction === 'cv' ? 'animate-pulse bg-muted' : ''}`}
+                      disabled={activeAction === 'cv'}
                     >
                       <FileDown className="h-5 w-5" />
+                      {activeAction === 'cv' && (
+                        <span className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-md">
+                          <span className="sr-only">Downloading CV</span>
+                          <FileDown className="h-3 w-3 animate-ping" />
+                        </span>
+                      )}
                       <span className="sr-only">Download CV</span>
                     </Button>
                   </TooltipTrigger>
@@ -127,12 +160,10 @@ export default function Footer() {
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-muted-foreground hover:text-primary transition-colors inline-block"
+                        className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center group"
                       >
-                        {link.label}
-                        {link.href === '/messages/lookup' && (
-                          <Search className="inline-block ml-2 h-3 w-3" />
-                        )}
+                        <span>{link.label}</span>
+                        {link.icon && <link.icon className="ml-2 h-3 w-3 opacity-70 group-hover:opacity-100 transition-opacity" />}
                       </Link>
                     </li>
                   ))}

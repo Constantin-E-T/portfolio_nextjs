@@ -6,6 +6,11 @@ import { hasRequiredRole } from '@/lib/types/auth'
 export default auth(async (req) => {
   const isLoggedIn = !!req.auth?.user
   const isAuthPage = req.nextUrl.pathname.startsWith('/login')
+
+  const isPublicAsset = req.nextUrl.pathname.startsWith('/cv/') || 
+                        req.nextUrl.pathname.startsWith('/logo/')
+
+
   const isPublicPath = [
     '/',
     '/about',
@@ -15,6 +20,10 @@ export default auth(async (req) => {
     '/messages/lookup',
     '/thank-you'
   ].includes(req.nextUrl.pathname)
+
+  if (isPublicAsset) {
+    return NextResponse.next()
+  }
 
   // Handle old routes and redirects
   const oldRoutes = ['/register']
@@ -65,6 +74,6 @@ export const config = {
     '/profile/:path*',
     '/settings/:path*',
     '/messages/:path*',
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|cv|logo).*)',
   ]
 }
