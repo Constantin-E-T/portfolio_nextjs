@@ -3,6 +3,8 @@ import { auth } from '@/app/utils/auth'
 import { redirect } from 'next/navigation'
 import { prisma } from "@/app/utils/db"
 import { Card } from '@/app/components/ui/card'
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import { MessageActions } from "@/app/components/messages/admin/MessageActions"
 import { MessagesMultiSelect } from "@/app/components/messages/admin/MessagesMultiSelect"
 import { BatchActions } from "@/app/components/messages/admin/BatchActions"
@@ -21,7 +23,7 @@ function MessagesLoading() {
         <Card key={i} className="p-6 bg-muted/5">
           <div className="flex justify-between items-start">
             <div className="flex items-start gap-4">
-            <Skeleton className="h-5 w-5 animate-pulse bg-muted-foreground/10" />
+              <Skeleton className="h-5 w-5 animate-pulse bg-muted-foreground/10" />
               <div>
                 <Skeleton className="h-5 w-[200px] mb-2 bg-muted-foreground/10" />
                 <Skeleton className="h-4 w-[250px] mb-2 bg-muted-foreground/10" />
@@ -73,7 +75,7 @@ async function MessagesList() {
           <Card key={message.id} className="p-6">
             <div className="flex justify-between items-start">
               <div className="flex items-start gap-4">
-                <MessagesMultiSelect 
+                <MessagesMultiSelect
                   messageId={message.id}
                 />
                 <div>
@@ -89,20 +91,33 @@ async function MessagesList() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`px-2 py-1 rounded-full text-xs ${
-                  message.status === 'UNREAD' 
-                    ? 'bg-primary/10 text-primary' 
+                <span className={`px-2 py-1 rounded-full text-xs ${message.status === 'UNREAD'
+                    ? 'bg-primary/10 text-primary'
                     : 'bg-muted text-muted-foreground'
-                }`}>
+                  }`}>
                   {message.status}
                 </span>
-                <MessageActions 
-                  messageId={message.id} 
+                <MessageActions
+                  messageId={message.id}
                   currentStatus={message.status}
                 />
               </div>
             </div>
             <p className="mt-4 text-sm">{message.content}</p>
+            <div className="mt-4 flex justify-between items-center">
+              <div className="text-xs text-muted-foreground">
+                Received: {new Date(message.createdAt).toLocaleString()}
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+              >
+                <Link href={`/admin/messages/${message.id}`}>
+                  View Details
+                </Link>
+              </Button>
+            </div>
             <div className="mt-4 text-xs text-muted-foreground">
               Received: {new Date(message.createdAt).toLocaleString()}
             </div>
@@ -123,7 +138,7 @@ async function MessagesList() {
 
 export default async function AdminMessages() {
   const session = await auth()
-  
+
   if (!session?.user) {
     redirect('/login')
   }
@@ -140,7 +155,7 @@ export default async function AdminMessages() {
         <BatchActions />
       </div>
 
-      <Suspense 
+      <Suspense
         key={new Date().getTime()}
         fallback={<MessagesLoading />}
       >
