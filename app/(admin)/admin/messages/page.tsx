@@ -1,5 +1,6 @@
 // app/(admin)/admin/messages/page.tsx
 import { auth } from '@/app/utils/auth'
+import { format } from "date-fns";
 import { redirect } from 'next/navigation'
 import { prisma } from "@/app/utils/db"
 import { Card } from '@/app/components/ui/card'
@@ -92,8 +93,8 @@ async function MessagesList() {
               </div>
               <div className="flex items-center gap-2">
                 <span className={`px-2 py-1 rounded-full text-xs ${message.status === 'UNREAD'
-                    ? 'bg-primary/10 text-primary'
-                    : 'bg-muted text-muted-foreground'
+                  ? 'bg-primary/10 text-primary'
+                  : 'bg-muted text-muted-foreground'
                   }`}>
                   {message.status}
                 </span>
@@ -106,8 +107,9 @@ async function MessagesList() {
             <p className="mt-4 text-sm">{message.content}</p>
             <div className="mt-4 flex justify-between items-center">
               <div className="text-xs text-muted-foreground">
-                Received: {new Date(message.createdAt).toLocaleString()}
+                Received: {format(new Date(message.createdAt), "PPP 'at' p")}
               </div>
+
               <Button
                 variant="ghost"
                 size="sm"
@@ -117,9 +119,6 @@ async function MessagesList() {
                   View Details
                 </Link>
               </Button>
-            </div>
-            <div className="mt-4 text-xs text-muted-foreground">
-              Received: {new Date(message.createdAt).toLocaleString()}
             </div>
           </Card>
         ))}
@@ -155,12 +154,9 @@ export default async function AdminMessages() {
         <BatchActions />
       </div>
 
-      <Suspense
-        key={new Date().getTime()}
-        fallback={<MessagesLoading />}
-      >
-        <MessagesList />
-      </Suspense>
+      <Suspense fallback={<MessagesLoading />}>
+  <MessagesList />
+</Suspense>
     </div>
   )
 }

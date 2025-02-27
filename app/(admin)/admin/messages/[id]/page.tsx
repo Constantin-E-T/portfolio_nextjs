@@ -13,7 +13,7 @@ export default async function AdminMessageDetailPage({ params }: { params: { id:
           replies: {
             include: {
               user: {
-                select: { name: true, image: true }
+                select: { id: true, name: true, image: true }
               }
             },
             orderBy: { createdAt: 'asc' }
